@@ -19,7 +19,7 @@
   --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --step-head: clamp(2rem, 1.3rem + 3.2vw, 3.6rem);
-  --step-hero: clamp(2.6rem, 1.6rem + 5vw, 5.2rem);
+  --step-hero: clamp(2.4rem, 1.4rem + 4.2vw, 4.4rem);
 
   --margin: clamp(20px, 5vw, 80px);
   --r-lg: 20px;
@@ -373,4 +373,42 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
   .rise { opacity: 1; transform: none; transition: none; }
   .stage, .btn, .spec, .proof-tile, .hero-media img { transition: none; }
   html { scroll-behavior: auto; }
+}
+
+/* ---------- dark 3D hero (wow layer) ---------- */
+.hero-dark { padding: clamp(24px, 4vh, 48px) var(--margin) 0; }
+.hero-panel {
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 4vw, 56px); align-items: start;
+  background: radial-gradient(120% 130% at 85% 15%, #1A222C 0%, #10151B 55%); /* taste-skill-ignore lighting, not decoration */
+  color: #fff; border-radius: calc(var(--r-lg) + 10px);
+  padding: clamp(36px, 6vw, 80px);
+  overflow: hidden; position: relative;
+  box-shadow: var(--shadow-lg);
+}
+.hero-panel .hero-title { color: #fff; }
+.hero-panel .hero-standfirst, .hero-panel .hero-sub { color: rgba(255,255,255,0.72); }
+.hero-panel .hero-standfirst b, .hero-panel .hero-sub b { color: #fff; }
+.hero-panel .hero-proof span {
+  background: rgba(255,255,255,0.07); color: #fff;
+  border: 1px solid rgba(255,255,255,0.12); /* taste-skill-ignore glass chip on dark */
+}
+.hero-3d { position: relative; height: clamp(380px, 56vh, 600px); border-radius: var(--r-lg); }
+.hero-3d canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-3d .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-lg); opacity: 0.9; }
+.hero-3d.on .fallback { display: none; }
+.hero-3d .glow {
+  position: absolute; inset: auto; left: 50%; top: 50%; width: 60%; height: 60%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #1D5FD133 0%, transparent 65%); /* taste-skill-ignore rim light halo */
+  pointer-events: none;
+}
+.hero-panel .btn.secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.16); /* taste-skill-ignore dark ghost */ }
+.hero-panel .btn.secondary:hover { background: rgba(255,255,255,0.16); }
+
+/* animated counters */
+.stat-card .n { display: inline-block; }
+
+@media (max-width: 900px) {
+  .hero-panel { grid-template-columns: 1fr; }
+  .hero-3d { height: 340px; order: -1; }
 }

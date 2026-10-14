@@ -102,8 +102,8 @@
 <main id="main">
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-grid">
+<section class="hero-dark">
+  <div class="hero-panel">
     <div class="hero-copy">
       <h1 class="hero-title">Stamped true.</h1>
       <p class="hero-sub">Precision metal stampings and pressed components from Nashik for automotive and electrical OEMs. Process design to mass production under one roof. <b>Send drawings for a 24-hour quote.</b></p>
@@ -118,14 +118,15 @@
         <a class="btn secondary" href="capabilities.html">See the press line</a>
       </div>
     </div>
-    <div class="hero-media">
-      <div class="frame">
-        <img src="assets/img/breaker-shaft-range.webp" alt="Welded breaker shaft assemblies in zinc and black finishes, stamped by Synergy Stampings" fetchpriority="high">
-      </div>
-      <span class="tag">Breaker shafts, stamped and welded in-house</span>
+    <div class="hero-3d" id="hero3d">
+      <div class="glow"></div>
+      <img class="fallback" src="assets/img/breaker-shaft-range.webp" alt="Welded breaker shaft assemblies in zinc and black finishes, stamped by Synergy Stampings">
     </div>
   </div>
-  <div class="proof-bar">
+</section>
+
+<section class="hero" style="padding-top:0;">
+  <div class="proof-bar" style="margin-top: clamp(20px, 4vh, 40px);">
     <p class="note">Through the SCF Group, our parts reach programs at:</p>
     <div class="names">
       <span>Mahindra &amp; Mahindra</span><span>ABB India</span><span>BHEL</span><span>Gabriel India</span><span>Lauritz Knudsen</span><span>KPIT</span><span>Sharda Motors</span><span>Sipra Engineers</span>
@@ -359,6 +360,16 @@
   </div>
 </footer>
 
+<script type="importmap">
+{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+</script>
+<script type="module">
+  import { initHero3D } from './assets/hero3d.js';
+  try {
+    initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d' });
+    document.getElementById('hero3d').classList.add('on');
+  } catch (e) { /* fallback photo stays */ }
+</script>
 <script src="assets/site.js" defer></script>
 </body>
 </html>

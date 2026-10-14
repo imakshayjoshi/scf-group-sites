@@ -12,9 +12,24 @@
     });
   }
 
+  // Hero copy entrance
+  var heroCopy = document.querySelector('.hero-copy');
+  if (heroCopy && !reduce) {
+    Array.prototype.forEach.call(heroCopy.children, function (el, i) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = 'opacity 700ms ease ' + (150 + i * 110) + 'ms, transform 700ms cubic-bezier(0.34,1.4,0.44,1) ' + (150 + i * 110) + 'ms';
+    });
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      Array.prototype.forEach.call(heroCopy.children, function (el) {
+        el.style.opacity = '1'; el.style.transform = 'none';
+      });
+    }); });
+  }
+
   // Entrance motion: auto-tag inner page blocks when no .rise exists
   if (!document.querySelector('.rise')) {
-    document.querySelectorAll('.chapter h2, .chapter > .lead, .media-split, .spec, .prod-row, .prod-row h3, .tagline-list, .quote-side, .quote-form .field, .check-row, .quote-form .btn, .fig, .page-hero h1, .page-hero .lede').forEach(function (el) {
+    document.querySelectorAll('.chapter h2, .chapter > .lead, .media-split, .spec, .prod-row, .quote-side, .quote-form .field, .check-row, .quote-form .btn, .fig, .page-hero h1, .page-hero .lede').forEach(function (el) {
       el.classList.add('rise');
     });
   }
@@ -30,15 +45,38 @@
     rise.forEach(function (el) { el.classList.add('in'); });
   }
 
-  // Folder stack entrance, then clear delays so hover is instant
-  var folders = document.querySelector('.folders');
-  if (folders) {
-    if (reduce) { folders.classList.add('in', 'settled'); }
-    else {
-      requestAnimationFrame(function () { requestAnimationFrame(function () { folders.classList.add('in'); }); });
-      setTimeout(function () { folders.classList.add('settled'); }, 1400);
-    }
-  }
+  // Stagger rise siblings
+  document.querySelectorAll('.stages, .proof-grid, .faq-list, .stats-grid').forEach(function (g) {
+    Array.prototype.forEach.call(g.querySelectorAll('.rise'), function (el, i) {
+      el.style.transitionDelay = (i * 70) + 'ms';
+    });
+  });
+
+  // Animated counters for stat numbers
+  document.querySelectorAll('.stat-card .n').forEach(function (el) {
+    var m = el.textContent.match(/([\d,.]+)/);
+    if (!m) return;
+    var target = parseFloat(m[1].replace(/,/g, ''));
+    if (!isFinite(target) || target < 5) return;
+    var prefix = el.textContent.slice(0, m.index);
+    var suffix = el.textContent.slice(m.index + m[1].length);
+    var io2 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io2.unobserve(el);
+        if (reduce) { return; }
+        var t0 = performance.now(), dur = 1400;
+        (function tick(now) {
+          var p = Math.min(1, (now - t0) / dur);
+          var ease = 1 - Math.pow(1 - p, 3);
+          var val = target * ease;
+          el.textContent = prefix + (target % 1 ? val.toFixed(2) : Math.round(val).toString()) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+      });
+    }, { threshold: 0.4 });
+    io2.observe(el);
+  });
 
   // Process accordion
   var stages = document.querySelectorAll('.stage');
