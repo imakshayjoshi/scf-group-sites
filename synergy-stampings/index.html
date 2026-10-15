@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=1792051260">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -104,6 +104,7 @@
 <!-- HERO -->
 <section class="hero-dark">
   <div class="hero-panel">
+    <div class="hero-3d" id="hero3d"><img class="fallback" src="assets/img/breaker-shaft-range.webp" alt="Welded breaker shaft assemblies in zinc and black finishes, stamped by Synergy Stampings"></div>
     <div class="hero-copy">
       <h1 class="hero-title">Stamped true.</h1>
       <p class="hero-sub">Precision metal stampings and pressed components from Nashik for automotive and electrical OEMs. Process design to mass production under one roof. <b>Send drawings for a 24-hour quote.</b></p>
@@ -117,12 +118,7 @@
         <a class="btn" href="quote.html">Request a Quote</a>
         <a class="btn secondary" href="capabilities.html">See the press line</a>
       </div>
-    </div>
-    <div class="hero-3d" id="hero3d">
-      <div class="glow"></div>
-      <img class="fallback" src="assets/img/breaker-shaft-range.webp" alt="Welded breaker shaft assemblies in zinc and black finishes, stamped by Synergy Stampings">
-    </div>
-  </div>
+    </div></div>
 </section>
 
 <section class="hero" style="padding-top:0;">
@@ -361,15 +357,15 @@
 </footer>
 
 <script type="importmap">
-{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+{"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js';
+  import { initHero3D } from './assets/hero3d.js?v=1792051260';
   try {
     initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d' });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/site.js" defer></script>
+<script src="assets/site.js?v=1792051260" defer></script>
 </body>
 </html>

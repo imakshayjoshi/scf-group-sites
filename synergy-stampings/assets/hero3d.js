@@ -1,10 +1,10 @@
 /* SCF hero 3D — procedural metal parts, studio-lit, spring-smoothed pointer parallax.
-   Config: { kind: 'plate' | 'blank', accent: 0xFF6A00, mount: canvas selector } */
+   Full-bleed: canvas fills the hero panel, model staged right-of-center.
+   Config: { kind: 'plate' | 'blank', accent: 0xRRGGBB, mount: selector } */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 function makeFlowTexture() {
-  // serpentine flow-field pattern for the fuel cell plate face
   const c = document.createElement('canvas');
   c.width = c.height = 512;
   const g = c.getContext('2d');
@@ -26,7 +26,6 @@ function makeFlowTexture() {
     }
     g.stroke();
   }
-  // corner ports
   g.fillStyle = '#3d3d3d';
   const r = 34, off = 52;
   [[off, off], [512 - off, off], [off, 512 - off], [512 - off, 512 - off]].forEach(([x, y]) => {
@@ -38,7 +37,6 @@ function makeFlowTexture() {
 }
 
 function makeBrushTexture() {
-  // fine horizontal brushed-metal lines
   const c = document.createElement('canvas');
   c.width = 512; c.height = 512;
   const g = c.getContext('2d');
@@ -52,6 +50,21 @@ function makeBrushTexture() {
   const tex = new THREE.CanvasTexture(c);
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
   return tex;
+}
+
+function makeGlowTexture(accent) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d');
+  const col = new THREE.Color(accent);
+  const rgb = `${Math.round(col.r * 255)},${Math.round(col.g * 255)},${Math.round(col.b * 255)}`;
+  const grad = g.createRadialGradient(128, 128, 8, 128, 128, 128);
+  grad.addColorStop(0, `rgba(${rgb},0.55)`);
+  grad.addColorStop(0.5, `rgba(${rgb},0.18)`);
+  grad.addColorStop(1, `rgba(${rgb},0)`);
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(c);
 }
 
 function roundedRectShape(w, h, r) {
@@ -70,7 +83,6 @@ function roundedRectShape(w, h, r) {
 }
 
 function buildPlate(accent) {
-  // fuel cell bi-polar plate: rounded plate, 4 corner holes, serpentine face
   const shape = roundedRectShape(2.3, 3.1, 0.28);
   const holeR = 0.17, hx = 0.86, hy = 1.26;
   [[-hx, -hy], [hx, -hy], [-hx, hy], [hx, hy]].forEach(([x, y]) => {
@@ -81,26 +93,24 @@ function buildPlate(accent) {
   const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.1, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3, curveSegments: 48 });
   geo.center();
   const face = new THREE.MeshStandardMaterial({
-    color: 0xb9c0c7, metalness: 0.92, roughness: 0.32,
+    color: 0xc4cbd2, metalness: 0.92, roughness: 0.3,
     bumpMap: makeFlowTexture(), bumpScale: 0.6,
   });
   const mesh = new THREE.Mesh(geo, face);
-  mesh.rotation.x = -0.35;
+  mesh.rotation.x = -0.32;
   const grp = new THREE.Group();
   grp.add(mesh);
-  // thin accent edge underlay for pop
   const edge = new THREE.Mesh(
     new THREE.ExtrudeGeometry(roundedRectShape(2.42, 3.22, 0.3), { depth: 0.04, bevelEnabled: false, curveSegments: 48 }),
     new THREE.MeshStandardMaterial({ color: accent, metalness: 0.5, roughness: 0.4 })
   );
   edge.position.z = -0.09;
-  edge.rotation.x = -0.35;
+  edge.rotation.x = -0.32;
   grp.add(edge);
   return grp;
 }
 
 function buildBlank(accent) {
-  // stamped blank: flat ring with center punch + small satellite puck
   const shape = new THREE.Shape();
   shape.absarc(0, 0, 1.25, 0, Math.PI * 2, false);
   const hole = new THREE.Path();
@@ -109,21 +119,20 @@ function buildBlank(accent) {
   const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.16, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.035, bevelSegments: 3, curveSegments: 64 });
   geo.center();
   const mat = new THREE.MeshStandardMaterial({
-    color: 0xb4bcc4, metalness: 0.9, roughness: 0.38,
+    color: 0xbcc4cc, metalness: 0.9, roughness: 0.36,
     bumpMap: makeBrushTexture(), bumpScale: 0.25,
   });
   const grp = new THREE.Group();
   const ring = new THREE.Mesh(geo, mat);
   grp.add(ring);
-  // the punched-out puck, loose, slightly tilted beside the ring
   const puck = new THREE.Mesh(
     new THREE.CylinderGeometry(0.4, 0.4, 0.14, 48),
     new THREE.MeshStandardMaterial({ color: accent, metalness: 0.6, roughness: 0.35 })
   );
-  puck.position.set(1.9, -0.5, 0.25);
+  puck.position.set(1.6, -0.9, 0.5);
   puck.rotation.set(Math.PI / 2.3, 0.4, 0.2);
   grp.add(puck);
-  grp.rotation.x = -0.4;
+  grp.rotation.x = -0.12;
   return grp;
 }
 
@@ -139,24 +148,33 @@ export function initHero3D(cfg) {
   renderer.toneMappingExposure = 1.15;
   mount.appendChild(renderer.domElement);
 
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  camera.position.set(0, 0.45, 6.3);
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.set(0, 0.35, 6.1);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  if ('environmentIntensity' in scene) scene.environmentIntensity = 1.25;
 
-  // key + accent rim lights
-  const key = new THREE.DirectionalLight(0xffffff, 1.6);
+  const key = new THREE.DirectionalLight(0xffffff, 1.7);
   key.position.set(4, 6, 6);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(cfg.accent, 2.4);
+  const rim = new THREE.DirectionalLight(cfg.accent, 2.6);
   rim.position.set(-6, -2, -4);
   scene.add(rim);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+
+  // accent glow bloom behind the model
+  const glow = new THREE.Mesh(
+    new THREE.PlaneGeometry(7.5, 7.5),
+    new THREE.MeshBasicMaterial({ map: makeGlowTexture(cfg.accent), transparent: true, depthWrite: false })
+  );
+  glow.position.set(1.7, 0, -2.2);
+  scene.add(glow);
 
   const model = cfg.kind === 'plate' ? buildPlate(cfg.accent) : buildBlank(cfg.accent);
-  model.scale.setScalar(1.12);
-  model.position.y = 0.15;
+  model.scale.setScalar(cfg.kind === 'plate' ? 1.28 : 1.18);
+  const baseY = cfg.kind === 'plate' ? 0.05 : 0.18;
+  model.position.set(cfg.modelX || 1.7, baseY, 0);
   scene.add(model);
 
   let tx = 0, ty = 0, rx = 0, ry = 0;
@@ -169,8 +187,12 @@ export function initHero3D(cfg) {
 
   function resize() {
     const w = mount.clientWidth, h = mount.clientHeight;
+    if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+    // narrow screens: pull model back to center so it stays visible
+    model.position.x = w < 760 ? 0 : 1.7;
+    glow.position.x = w < 760 ? 0 : 1.7;
     camera.updateProjectionMatrix();
   }
   resize();
@@ -184,12 +206,12 @@ export function initHero3D(cfg) {
     requestAnimationFrame(frame);
     if (!visible) return;
     const t = clock.getElapsedTime();
-    // spring-smoothed parallax + idle spin + gentle float
     rx += (tx - rx) * 0.045;
     ry += (ty - ry) * 0.045;
     model.rotation.y = t * (reduce ? 0 : 0.22) + rx * 2.2;
-    model.rotation.x += (((cfg.kind === 'plate' ? -0.35 : -0.4) + ry * 1.4) - model.rotation.x) * 0.05;
-    model.position.y = Math.sin(t * 0.8) * (reduce ? 0 : 0.07);
+    const baseX = cfg.kind === 'plate' ? -0.32 : -0.12;
+    model.rotation.x += ((baseX + ry * 1.4) - model.rotation.x) * 0.05;
+    model.position.y = baseY + Math.sin(t * 0.8) * (reduce ? 0 : 0.07);
     renderer.render(scene, camera);
   }
   frame();

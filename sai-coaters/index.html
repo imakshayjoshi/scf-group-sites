@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=1792051260">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -118,6 +118,7 @@
 <!-- HERO -->
 <section class="hero-dark">
   <div class="hero-panel">
+    <div class="hero-3d" id="hero3d"><img class="fallback" src="assets/img/fuelcell-bipolar-plate.webp" alt="Pressed bi-polar plate with serpentine flow channels, made by Sai Coaters for a hydrogen fuel cell program"></div>
     <div class="hero-copy">
       <h1 class="hero-title">
         <span class="line"><span>Sheet metal to</span></span>
@@ -134,12 +135,7 @@
         <a class="btn" href="quote.html">Request a Quote</a>
         <a class="btn secondary" href="capabilities.html">See the plant stack</a>
       </div>
-    </div>
-    <div class="hero-3d" id="hero3d">
-      <div class="glow"></div>
-      <img class="fallback" src="assets/img/fuelcell-bipolar-plate.webp" alt="Pressed bi-polar plate with serpentine flow channels, made by Sai Coaters for a hydrogen fuel cell program">
-    </div>
-  </div>
+    </div></div>
 </section>
 
 <!-- PROOF BAR -->
@@ -407,15 +403,15 @@
 </footer>
 
 <script type="importmap">
-{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+{"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js';
+  import { initHero3D } from './assets/hero3d.js?v=1792051260';
   try {
     initHero3D({ kind: 'plate', accent: 0xFF6A00, mount: '#hero3d' });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/site.js" defer></script>
+<script src="assets/site.js?v=1792051260" defer></script>
 </body>
 </html>
