@@ -166,22 +166,22 @@ export function initHero3D(cfg) {
   // light theme: soft blue halo far behind + contact shadow under the model
   const glow = new THREE.Mesh(
     new THREE.PlaneGeometry(9, 9),
-    new THREE.MeshBasicMaterial({ map: makeGlowTexture(cfg.accent), transparent: true, depthWrite: false, opacity: 0.5 })
+    new THREE.MeshBasicMaterial({ map: makeGlowTexture(cfg.accent), transparent: true, depthWrite: false, opacity: 0.34 })
   );
-  glow.position.set(1.95, 0.2, -2.6);
+  glow.position.set((cfg.modelX ?? 1.95), 0.2, -2.6);
   scene.add(glow);
   const shadowTex = makeGlowTexture(0x0A1020);
   const contact = new THREE.Mesh(
     new THREE.PlaneGeometry(4.6, 4.6),
     new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0.55 })
   );
-  contact.position.set(1.95, -1.55, -0.6);
+  contact.position.set((cfg.modelX ?? 1.95), -2.05, -0.8);
   scene.add(contact);
 
   const model = cfg.kind === 'plate' ? buildPlate(cfg.accent) : buildBlank(cfg.accent);
-  model.scale.setScalar(cfg.kind === 'plate' ? 1.28 : 1.18);
+  model.scale.setScalar((cfg.kind === 'plate' ? 1.28 : 1.18) * (cfg.modelScale || 1));
   const baseY = cfg.kind === 'plate' ? 0.05 : 0.18;
-  model.position.set(cfg.modelX || 1.95, baseY, 0);
+  model.position.set((cfg.modelX ?? 1.95), baseY, 0);
   scene.add(model);
 
   let tx = 0, ty = 0, rx = 0, ry = 0;
@@ -198,9 +198,9 @@ export function initHero3D(cfg) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // narrow screens: pull model back to center so it stays visible
-    model.position.x = w < 760 ? 0 : 1.95;
-    glow.position.x = w < 760 ? 0 : 1.95;
-    contact.position.x = w < 760 ? 0 : 1.95;
+    model.position.x = w < 760 ? 0 : ((cfg.modelX ?? 1.95));
+    glow.position.x = w < 760 ? 0 : (cfg.modelX ?? 1.95);
+    contact.position.x = w < 760 ? 0 : (cfg.modelX ?? 1.95);
     camera.updateProjectionMatrix();
   }
   resize();

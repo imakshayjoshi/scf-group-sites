@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792057744">
+<link rel="stylesheet" href="assets/site.css?v=1792060491">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -116,27 +116,29 @@
 <main id="main">
 
 <!-- HERO -->
-<section class="hero-dark">
-  <div class="hero-panel">
+<section class="hero-cine hero-cine-dark">
     <div class="hero-3d" id="hero3d"><img class="fallback" src="assets/img/fuelcell-bipolar-plate.webp" alt="Pressed bi-polar plate with serpentine flow channels, made by Sai Coaters for a hydrogen fuel cell program"></div>
+    <div class="scrim"></div>
+    <p class="kicker rise">Sai Coaters &amp; Fabricators &middot; MIDC Ambad, Nashik</p>
     <div class="hero-copy">
       <h1 class="hero-title">
         <span class="line"><span>Sheet metal to</span></span>
         <span class="line"><span>finished part.</span></span>
       </h1>
-      <p class="hero-standfirst">Pressed, fabricated and powder-coated components from Nashik for automotive and electrical OEMs. <b>In-house tool room to dispatch. Approved source by Mahindra &amp; Mahindra.</b> Send drawings for a 24-hour quote.</p>
-      <div class="hero-proof">
-        <span>Since 2002</span>
-        <span>Presses 40 to 300 T</span>
-        <span>₹52.26 Cr group</span>
-        <span>Two plants, MIDC Ambad</span>
-      </div>
+      <p class="hero-standfirst">Pressed, fabricated and powder-coated components for automotive and electrical OEMs. In-house tool room to dispatch. <b>Approved source by Mahindra &amp; Mahindra.</b></p>
       <div class="hero-actions">
         <a class="btn" href="quote.html">Request a Quote</a>
         <a class="btn secondary" href="capabilities.html">See the plant stack</a>
       </div>
-    </div></div>
-</section>
+      <div class="hero-proof">
+        <span>Since 2002</span>
+        <span>Presses 40 to 300 T</span>
+        <span>&#8377;52.26 Cr group</span>
+        <span>Two plants, MIDC Ambad</span>
+      </div>
+    </div>
+    <p class="scroll-cue" aria-hidden="true">Scroll<span class="cue-line"></span></p>
+  </section>
 
 <!-- PROOF BAR -->
 <section class="hero" style="padding-top:0;">
@@ -413,12 +415,12 @@
 {"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js?v=1792057744';
+  import { initHero3D } from './assets/hero3d.js?v=1792060491';
   try {
-    initHero3D({ kind: 'plate', accent: 0xFF6A00, mount: '#hero3d' });
+    initHero3D({ kind: 'plate', accent: 0xFF6A00, mount: '#hero3d', modelX: 2.0, modelScale: 1.18 });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/site.js?v=1792057744" defer></script>
+<script src="assets/site.js?v=1792060491" defer></script>
 </body>
 </html>

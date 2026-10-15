@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792057744">
+<link rel="stylesheet" href="assets/site.css?v=1792060491">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -102,24 +102,24 @@
 <main id="main">
 
 <!-- HERO -->
-<section class="hero-dark">
-  <div class="hero-panel">
+<section class="hero-cine hero-cine-light">
     <div class="hero-3d" id="hero3d"><img class="fallback" src="assets/img/breaker-shaft-range.webp" alt="Welded breaker shaft assemblies in zinc and black finishes, stamped by Synergy Stampings"></div>
+    <p class="kicker rise">Synergy Stampings &middot; SCF Group &middot; Nashik</p>
     <div class="hero-copy">
-      <h1 class="hero-title">Stamped true.</h1>
-      <p class="hero-sub">Precision metal stampings and pressed components from Nashik for automotive and electrical OEMs. Process design to mass production under one roof. <b>Send drawings for a 24-hour quote.</b></p>
-      <div class="hero-proof">
-        <span>SCF Group, since 2002</span>
-        <span>₹52.26 Cr group</span>
-        <span>Presses 40 to 300 T</span>
-        <span>M&amp;M approved</span>
-      </div>
+      <h1 class="hero-title">Stamped<br>true.</h1>
+      <p class="hero-sub">Precision metal stampings and pressed components for automotive and electrical OEMs. Process design to mass production under one roof.</p>
       <div class="hero-actions">
         <a class="btn" href="quote.html">Request a Quote</a>
         <a class="btn secondary" href="capabilities.html">See the press line</a>
       </div>
-    </div></div>
-</section>
+    </div>
+    <div class="hero-meta">
+      <span>SCF Group, since 2002</span>
+      <span>&#8377;52.26 Cr group</span>
+      <span>Presses 40 to 300 T</span>
+      <span>M&amp;M approved</span>
+    </div>
+  </section>
 
 <section class="hero" style="padding-top:0;">
   <div class="proof-bar" style="margin-top: clamp(20px, 4vh, 40px);">
@@ -367,12 +367,12 @@
 {"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js?v=1792057744';
+  import { initHero3D } from './assets/hero3d.js?v=1792060491';
   try {
-    initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d' });
+    initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d', modelX: 0, modelScale: 1.28 });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/site.js?v=1792057744" defer></script>
+<script src="assets/site.js?v=1792060491" defer></script>
 </body>
 </html>
