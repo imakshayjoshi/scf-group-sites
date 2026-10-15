@@ -699,3 +699,14 @@ a[href^="tel:"] { white-space: nowrap; }
 .autoscroll .stage .s-body { transition: opacity 160ms ease 60ms, visibility 0s linear 240ms; }
 .autoscroll .stage[aria-expanded="true"] .s-body { transition: opacity 180ms ease 40ms; }
 .autoscroll .stage .s-vert { transition: opacity 140ms ease; }
+
+/* mobile header: never let the wordmark push the Menu button out of the pill */
+@media (max-width: 900px) {
+  .site-head { gap: 10px; padding-right: 8px; }
+  .site-head .wordmark { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; }
+  .site-head .menu-toggle { flex: none; margin-left: 8px; padding: 8px 12px; }
+}
+@media (max-width: 400px) {
+  .site-head .wordmark { font-size: 15.5px; gap: 8px; }
+  .site-head .wordmark .mark { width: 24px; height: 24px; }
+}
