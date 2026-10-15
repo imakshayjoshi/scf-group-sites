@@ -1136,9 +1136,7 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
 .hero-cine-dark .hero-copy { padding-bottom: clamp(40px, 6vh, 64px); }
 .hero-cine-dark .hero-proof span { background: none !important; border: none !important; padding: 0 !important; }
 
-/* cine hero: never clip at short viewports */
-.hero-cine { overflow: visible; }
-.hero-cine .hero-3d { overflow: hidden; border-radius: 0; }
+/* cine hero: clip canvas scale bleed; content fits via height media queries */
 @media (max-height: 760px) and (min-width: 761px) {
   .hero-cine-dark .hero-title { font-size: clamp(2.2rem, 1rem + 4vw, 3.6rem); margin-bottom: 14px; }
   .hero-cine-dark .hero-standfirst { margin-bottom: 18px; font-size: 1rem; }
@@ -1192,3 +1190,38 @@ body:has(.hero-cine) { padding-top: 0 !important; }
 .scene-words .w { opacity: calc(0.16 + var(--wp, 0) * 0.84); }
 .scene-words .w.accent { color: color-mix(in srgb, #FFFFFF calc((1 - var(--wp, 0)) * 100%), #FF6A00 calc(var(--wp, 0) * 100%)); }
 .scene-progress { width: 160px; height: 3px; }
+
+/* overflow fix: clip the scaled canvas at hero level (content fits via height media queries) */
+.hero-cine { overflow: hidden; }
+
+/* ============ FLAGSHIP SHOWCASE (AirPods-style pinned reveal) ============ */
+.pshow .pshow-kick { position: absolute; top: clamp(72px, 11vh, 110px); left: 50%; transform: translateX(-50%); margin: 0; font-size: 12.5px; letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600; opacity: 0.55; }
+.pshow .pshow-frame { width: min(72vw, 880px); border-radius: var(--r-lg, 22px); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+.pshow .pshow-frame img { width: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; transform: scale(calc(1.18 - var(--p, 0) * 0.18)); will-change: transform; }
+.pshow .pcall { position: absolute; z-index: 3; padding: 14px 18px; border-radius: 14px; font-size: 14px; line-height: 1.35; text-align: left; max-width: 240px;
+  opacity: calc(var(--wp, 0)); transform: translateY(calc((1 - var(--wp, 0)) * 22px)) scale(calc(0.94 + var(--wp, 0) * 0.06));
+  will-change: opacity, transform; }
+.pshow .pcall b { display: block; font-size: 15.5px; }
+.pshow .pcall span { opacity: 0.72; }
+.pshow .pcall.c1 { top: 24%; left: 7%; }
+.pshow .pcall.c2 { top: 46%; right: 6%; }
+.pshow .pcall.c3 { bottom: 16%; left: 10%; }
+/* transit zoom on product rows */
+.p-img img { transform: scale(calc(1.14 - var(--zp, 0) * 0.14)) !important; transition: none !important; will-change: transform; }
+@media (max-width: 760px) {
+  .pshow .pcall { position: static; margin: 10px auto 0; max-width: 340px; opacity: 1 !important; transform: none !important; }
+  .pshow .pshow-frame { width: 100%; }
+  .p-img img { transform: none !important; }
+}
+
+.pshow .pcall { background: rgba(10,18,28,0.72); border: 1px solid rgba(255,255,255,0.14); color: #fff; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+/* spacing rhythm pass: consistent gaps inside rows/cards */
+.prod-row { padding: clamp(44px, 6vh, 72px) 0; }
+.prod-row .p-txt h3 { margin-bottom: 14px; }
+.prod-row .tagline-list { margin: 18px 0 0; }
+.tagline-list li + li { margin-top: 8px; }
+
+/* showcase clearance */
+.pshow .scene-stage { padding-top: clamp(48px, 7vh, 72px); }
+.pshow .pshow-kick { top: clamp(40px, 6vh, 64px); }

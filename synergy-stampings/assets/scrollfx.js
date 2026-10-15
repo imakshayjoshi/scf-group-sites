@@ -16,6 +16,18 @@
     });
   }
 
+
+  // ---- transit zoom: [data-zoom] images settle as they cross the viewport ----
+  let zooms = [];
+  function collectZooms() { zooms = [...document.querySelectorAll('[data-zoom]')]; }
+  function frameZooms(vh) {
+    for (const el of zooms) {
+      const r = el.getBoundingClientRect();
+      // p: 0 when top hits viewport bottom, 1 when element center passes viewport center
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85)));
+      el.style.setProperty('--zp', p.toFixed(3));
+    }
+  }
   function frame() {
     target = scrollY;
     smooth = lerp(smooth, target, 0.16);
@@ -30,6 +42,7 @@
       window.__heroScroll = p; // hero3d reads this for scroll-linked rotation
     }
 
+    frameZooms(vh);
     // pinned scenes
     for (const s of scenes) {
       const r = s.wrap.getBoundingClientRect();
@@ -55,7 +68,9 @@
 
   function start() {
     collect();
+    collectZooms();
     if (reduce || isMobile()) {
+      zooms.forEach(el => el.style.setProperty('--zp', 1));
       // static: everything fully revealed
       scenes.forEach(s => { s.words.forEach(w => w.style.setProperty('--wp', 1)); if (s.sub) s.sub.style.setProperty('--sp', 1); });
       const hero = document.querySelector('.hero-cine');
@@ -69,5 +84,5 @@
   else start();
 
   let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { collect(); }, 200); });
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { collect(); collectZooms(); }, 200); });
 })();
