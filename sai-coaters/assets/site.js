@@ -120,6 +120,9 @@
         var key = tab.getAttribute('data-tab');
         panels.forEach(function (p) {
           p.hidden = p.getAttribute('data-panel') !== key;
+          if (!p.hidden) {
+            p.querySelectorAll('img[loading="lazy"]').forEach(function (i) { i.loading = 'eager'; });
+          }
         });
       });
     });

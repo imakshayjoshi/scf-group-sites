@@ -113,7 +113,12 @@
         tabs.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
         tab.setAttribute('aria-selected', 'true');
         var key = tab.getAttribute('data-tab');
-        panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== key; });
+        panels.forEach(function (p) {
+          p.hidden = p.getAttribute('data-panel') !== key;
+          if (!p.hidden) {
+            p.querySelectorAll('img[loading="lazy"]').forEach(function (i) { i.loading = 'eager'; });
+          }
+        });
       });
     });
   }
