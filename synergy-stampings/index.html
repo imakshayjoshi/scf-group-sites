@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792091847">
+<link rel="stylesheet" href="assets/site.css?v=1792092153">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,6 +80,7 @@
 <meta name="twitter:title" content="Synergy Stampings | Precision Stampings, Nashik">
 <meta name="twitter:description" content="Precision metal stampings and pressed components from MIDC Ambad, Nashik for automotive and electrical OEMs. Part of the SCF Group. Quotes in 24 hours.">
 <meta name="twitter:image" content="https://site.xseven.us/synergy-stampings/assets/img/press-seyi-110.webp">
+<link rel="preload" as="image" href="assets/img/breaker-shaft-range.webp">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -410,13 +411,18 @@
 {"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js?v=1792091847';
-  try {
-    initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d', modelX: 0, modelScale: 1.28 });
-    document.getElementById('hero3d').classList.add('on');
-  } catch (e) { /* fallback photo stays */ }
+  // 3D hero loads AFTER first paint: the fallback image is the LCP visual;
+  // three.js (671KB) downloads during idle time, then fades in.
+  const boot3d = () => import('./assets/hero3d.js?v=1792092153').then(m => {
+    try {
+      m.initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d', modelX: 0, modelScale: 1.28 });
+      document.getElementById('hero3d').classList.add('on');
+    } catch (e) { /* fallback photo stays */ }
+  }).catch(() => {});
+  if ('requestIdleCallback' in window) requestIdleCallback(boot3d, { timeout: 2500 });
+  else window.addEventListener('load', () => setTimeout(boot3d, 300));
 </script>
-<script src="assets/scrollfx.js?v=1792091847" defer></script>
-<script src="assets/site.js?v=1792091847" defer></script>
+<script src="assets/scrollfx.js?v=1792092153" defer></script>
+<script src="assets/site.js?v=1792092153" defer></script>
 </body>
 </html>
