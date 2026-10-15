@@ -730,3 +730,11 @@ img.cutout { object-fit: contain !important; padding: 5%; background: transparen
 .pshow .pshow-frame img.cutout { transform: scale(calc(1.06 - var(--p, 0) * 0.06)); }
 .p-img img.cutout { transform: scale(calc(1.05 - var(--zp, 0) * 0.05)) !important; }
 @media (max-width: 760px) { .p-img img.cutout { transform: none !important; } }
+
+/* showcase image height matched to content (was 1:1 square -> dead space above/below text) */
+.showcase .media-card img { aspect-ratio: 4 / 3; }
+@media (max-width: 900px) { .showcase .media-card img { aspect-ratio: 16 / 11; } }
+
+/* aspect-ratio needs height:auto — the HTML height attr was overriding it (img rendered 1000px tall) */
+.showcase .media-card img { height: auto !important; }
+.p-img img, .fig img, .pshow .pshow-frame img { height: auto; }
