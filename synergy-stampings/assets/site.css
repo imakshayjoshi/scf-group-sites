@@ -837,3 +837,13 @@ a:not(.btn):not(.tab):not(.wordmark):not(.who):not(.head-phone):not(.action) {
 /* grid min-content blowout: selects/imgs with intrinsic widths stretch the track past the viewport */
 .quote-wrap > *, .quote-form, .quote-form .field, .field input, .field select, .field textarea { min-width: 0; }
 .field input, .field select, .field textarea { max-width: 100%; box-sizing: border-box; }
+
+/* heading-order fixes: promoted h2s keep the exact h3 look; footer heads are plain paragraphs */
+.media-split h2 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); margin-bottom: 14px; }
+.prod-row h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin-bottom: 14px; }
+.ind-row h2 { margin-bottom: 14px; }
+.foot-h { font-size: 14px; font-weight: 600; margin: 0 0 14px; color: var(--muted-dark); font-family: var(--font-text); }
+
+/* anchor jumps clear the fixed header */
+html { scroll-padding-top: 96px; }
+[id] { scroll-margin-top: 96px; }
