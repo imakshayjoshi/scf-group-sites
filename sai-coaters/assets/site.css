@@ -1225,3 +1225,8 @@ body:has(.hero-cine) { padding-top: 0 !important; }
 /* showcase clearance */
 .pshow .scene-stage { padding-top: clamp(48px, 7vh, 72px); }
 .pshow .pshow-kick { top: clamp(40px, 6vh, 64px); }
+
+/* fix batch: phones never wrap, FAQ grid aligned, open state neutral */
+a[href^="tel:"] { white-space: nowrap; }
+.section:has(.faq-list) .section-head { max-width: 880px; margin-inline: auto; }
+.faq-item[open] summary, .faq-card[open] summary { color: inherit !important; }
