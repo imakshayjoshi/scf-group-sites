@@ -1384,3 +1384,20 @@ a:not(.btn):not(.tab):not(.wordmark):not(.who):not(.head-phone):not(.action) {
 /* anchor jumps clear the fixed header */
 html { scroll-padding-top: 96px; }
 [id] { scroll-margin-top: 96px; }
+
+/* beat .foot-grid p specificity */
+.foot-grid .foot-h, p.foot-h { font-size: 14px; font-weight: 600; margin: 0 0 14px; color: var(--muted-dark); font-family: var(--font-text); line-height: 1.4; }
+
+/* ============ PRINT ============ */
+@media print {
+  .site-head, .menu-toggle, .hero-cine, canvas, .scroll-cue, .prefill-card, form[data-rfq], .quote-form, .skip,
+  [data-scene] .scene-stage, video, iframe { display: none !important; }
+  html, body { background: #fff !important; color: #111 !important; }
+  * { color: #111 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important; }
+  main, .chapter, .section, .page-hero { padding-top: 0 !important; min-height: 0 !important; }
+  [data-scene] { height: auto !important; }
+  a { text-decoration: underline; }
+  img { max-width: 100% !important; break-inside: avoid; }
+  h1, h2, h3, p, li, tr { break-inside: avoid; }
+  .spec, .prod-row, .who-card, .process-card { border: 1px solid #ccc !important; break-inside: avoid; }
+}

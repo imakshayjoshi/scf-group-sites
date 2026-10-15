@@ -310,3 +310,8 @@
   if (document.readyState === 'complete') setTimeout(jump, 60);
   else window.addEventListener('load', function () { setTimeout(jump, 60); });
 })();
+
+/* print: open all accordions so nothing prints collapsed */
+window.addEventListener('beforeprint', function () {
+  document.querySelectorAll('details').forEach(function (d) { d.setAttribute('open', ''); });
+});
