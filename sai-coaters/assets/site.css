@@ -1297,3 +1297,17 @@ th, td { overflow-wrap: anywhere; }
 @media (max-width: 560px) {
   th, td { padding: 10px 12px; font-size: 14px; }
 }
+
+/* fluid stat figures: scale with viewport, never fixed */
+.spec-fig { font-family: var(--font-display); font-weight: 700; color: var(--ink); line-height: 1.08; font-size: clamp(24px, 2.6vw, 34px); margin: 4px 0 0; }
+.spec-grid .spec { min-width: 0; }
+
+/* beat .spec p specificity so the fluid figure size actually applies */
+.spec p.spec-fig { font-size: clamp(24px, 2.6vw, 34px); font-family: var(--font-display); font-weight: 700; color: var(--ink); line-height: 1.08; margin: 4px 0 0; }
+
+.spec p.spec-current-fig { font-size: clamp(34px, 4.6vw, 52px); font-family: var(--font-display); font-weight: 700; color: var(--ink); line-height: 1.05; }
+
+/* gate fixes */
+p.scroll-cue, .scroll-cue { font-size: 12px !important; }
+/* no orphan words on headings */
+h1, h2, h3 { text-wrap: balance; }
