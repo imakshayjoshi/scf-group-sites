@@ -518,3 +518,8 @@ body {
 /* audit contrast bumps */
 .fig figcaption { color: rgba(30,38,50,0.75); }
 .hero-dark + .hero .note { color: inherit; opacity: 0.8; }
+
+/* tighten the stamp-toy block: big dark void -> focused demo band */
+.stamp-toy { padding-block: clamp(56px, 7vw, 88px) !important; }
+.stamp-toy .section-head { margin-bottom: 28px; }
+.stamp-toy .plate { margin-top: 28px; }
