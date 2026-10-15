@@ -195,3 +195,91 @@
     });
   }
 })();
+
+/* ---------- interaction layer: validation + file feedback ---------- */
+(function () {
+  var form = document.querySelector('form[data-rfq]');
+  if (!form) return;
+  form.setAttribute('novalidate', 'novalidate');
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function fieldWrap(el) { return el.closest('.field'); }
+  function errEl(el) {
+    var w = fieldWrap(el);
+    if (!w) return null;
+    var e = w.querySelector('.field-error');
+    if (!e) { e = document.createElement('span'); e.className = 'field-error'; w.appendChild(e); }
+    return e;
+  }
+  function validate(el, quiet) {
+    var w = fieldWrap(el);
+    if (!w) return true;
+    var v = (el.value || '').trim();
+    var bad = '';
+    if (el.hasAttribute('required') && !v) bad = 'This one is needed.';
+    else if (el.type === 'email' && v && !EMAIL_RE.test(v)) bad = 'That email does not look right.';
+    else if (el.type === 'tel' && v && v.replace(/\D/g, '').length < 7) bad = 'That number looks too short.';
+    if (bad && !quiet) {
+      w.classList.add('invalid');
+      var e = errEl(el); if (e) e.textContent = bad;
+    } else if (!bad) {
+      w.classList.remove('invalid');
+    }
+    return !bad;
+  }
+
+  form.querySelectorAll('input:not([type="hidden"]):not([type="file"]), select, textarea').forEach(function (el) {
+    if (el.type === 'tel') {
+      el.addEventListener('input', function () {
+        var clean = el.value.replace(/[^\d+\s()-]/g, '');
+        if (clean !== el.value) el.value = clean;
+      });
+    }
+    el.addEventListener('blur', function () { validate(el); });
+    el.addEventListener('input', function () {
+      var w = fieldWrap(el);
+      if (w && w.classList.contains('invalid')) validate(el);
+    });
+  });
+
+  form.addEventListener('submit', function (ev) {
+    var ok = true, first = null;
+    form.querySelectorAll('input[required], select[required], textarea[required], input[type="email"], input[type="tel"]').forEach(function (el) {
+      if (!validate(el)) { ok = false; if (!first) first = el; }
+    });
+    if (!ok) {
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      if (first) {
+        first.focus();
+        first.closest('.field').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, true);
+
+  var file = form.querySelector('input[type="file"]');
+  if (file) {
+    var chosen = document.createElement('span');
+    chosen.className = 'file-chosen';
+    file.parentElement.appendChild(chosen);
+    file.addEventListener('change', function () {
+      var w = fieldWrap(file);
+      if (file.files && file.files.length) {
+        chosen.textContent = 'Attached: ' + file.files[0].name;
+        w.classList.add('has-file');
+      } else {
+        chosen.textContent = '';
+        w.classList.remove('has-file');
+      }
+    });
+  }
+
+  // button loading state (works alongside the existing RFQ submit flow)
+  var submitBtn = form.querySelector('button[type="submit"], .btn[type="submit"], button.btn');
+  if (submitBtn) {
+    form.addEventListener('submit', function () {
+      if (form.checkValidity() || form.querySelector('.field.invalid')) { /* custom flow handles */ }
+    });
+  }
+})();
