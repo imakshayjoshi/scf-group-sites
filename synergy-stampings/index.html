@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792069962">
+<link rel="stylesheet" href="assets/site.css?v=1792070991">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -145,10 +145,11 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section tint" aria-labelledby="proc-h">
+<section class="section tint autoscroll" aria-labelledby="proc-h" data-scene data-autoscroll>
+  <div class="auto-stage">
   <div class="section-head">
     <h2 id="proc-h">From drawing to a million parts</h2>
-    <p>Four stages, one plant, one owner for your part at every step.</p>
+    <p>Four stages, one plant, one owner for your part at every step. Keep scrolling — the line moves for you.</p>
   </div>
   <div class="stages rise">
     <button class="stage s1" aria-expanded="true">
@@ -183,6 +184,8 @@
         <img src="assets/img/shock-absorber-tubes.webp" alt="Finished stamped and plated parts lined up for packing" loading="lazy">
       </span>
     </button>
+  </div>
+  <div class="scene-progress" aria-hidden="true"><i></i></div>
   </div>
 </section>
 
@@ -373,13 +376,13 @@
 {"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js?v=1792069962';
+  import { initHero3D } from './assets/hero3d.js?v=1792070991';
   try {
     initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d', modelX: 0, modelScale: 1.28 });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/scrollfx.js?v=1792069962" defer></script>
-<script src="assets/site.js?v=1792069962" defer></script>
+<script src="assets/scrollfx.js?v=1792070991" defer></script>
+<script src="assets/site.js?v=1792070991" defer></script>
 </body>
 </html>

@@ -1230,3 +1230,9 @@ body:has(.hero-cine) { padding-top: 0 !important; }
 a[href^="tel:"] { white-space: nowrap; }
 .section:has(.faq-list) .section-head { max-width: 880px; margin-inline: auto; }
 .faq-item[open] summary, .faq-card[open] summary { color: inherit !important; }
+
+/* showcase media card: image fills edge to edge */
+.showcase .media-card { padding: 0; overflow: hidden; }
+.showcase .media-card > div { margin: 0; }
+.showcase .media-card img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.showcase { gap: clamp(20px, 3vw, 44px); }

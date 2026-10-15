@@ -56,6 +56,11 @@
         const wp = Math.min(1, Math.max(0, (p - start) / (end - start)));
         w.style.setProperty('--wp', wp.toFixed(3));
       });
+      if (s.wrap.hasAttribute('data-autoscroll')) {
+        const st = [...s.wrap.querySelectorAll('.stage')];
+        const idx = Math.min(st.length - 1, Math.floor(p * st.length * 0.999));
+        st.forEach((el, i) => el.setAttribute('aria-expanded', i === idx ? 'true' : 'false'));
+      }
       if (s.sub) {
         const sp = Math.min(1, Math.max(0, (p - 0.86) / 0.12));
         s.sub.style.setProperty('--sp', sp.toFixed(3));
