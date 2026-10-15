@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792093005">
+<link rel="stylesheet" href="assets/site.css?v=1792093434">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -416,16 +416,16 @@
 <script type="module">
   // 3D hero loads AFTER first paint: the fallback image is the LCP visual;
   // three.js (671KB) downloads during idle time, then fades in.
-  const boot3d = () => import('./assets/hero3d.js?v=1792093005').then(m => {
+  const boot3d = () => import('./assets/hero3d.js?v=1792093434').then(m => {
     try {
       m.initHero3D({ kind: 'plate', accent: 0xFF6A00, mount: '#hero3d', modelX: 2.0, modelScale: 1.18 });
       document.getElementById('hero3d').classList.add('on');
-    } catch (e) { /* fallback photo stays */ }
-  }).catch(() => {});
+    } catch (e) { document.getElementById('hero3d').classList.add('no3d'); }
+  }).catch(() => { document.getElementById('hero3d').classList.add('no3d'); });
   if ('requestIdleCallback' in window) requestIdleCallback(boot3d, { timeout: 2500 });
   else window.addEventListener('load', () => setTimeout(boot3d, 300));
 </script>
-<script src="assets/scrollfx.js?v=1792093005" defer></script>
-<script src="assets/site.js?v=1792093005" defer></script>
+<script src="assets/scrollfx.js?v=1792093434" defer></script>
+<script src="assets/site.js?v=1792093434" defer></script>
 </body>
 </html>

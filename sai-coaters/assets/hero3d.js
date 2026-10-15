@@ -136,7 +136,13 @@ function buildBlank(accent) {
   return grp;
 }
 
+function webglOk() {
+  try { const c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl'))); }
+  catch (e) { return false; }
+}
+
 export function initHero3D(cfg) {
+  if (!webglOk()) throw new Error('no-webgl');
   const mount = document.querySelector(cfg.mount);
   if (!mount) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
