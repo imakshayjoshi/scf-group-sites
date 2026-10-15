@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792091385">
+<link rel="stylesheet" href="assets/site.css?v=1792091847">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -278,6 +278,39 @@
   </div>
 </section>
 
+
+<!-- PREFILL: live RFQ starter -->
+<section class="section tint" aria-labelledby="pre-h">
+  <div class="prefill-card rise">
+    <div class="intro">
+      <h2 id="pre-h">Start your RFQ in ten seconds</h2>
+      <p>Pick what you need made. We carry your answers into the quote form, so you only add the drawing.</p>
+    </div>
+    <form data-prefill>
+      <div>
+        <label for="pf-process">Process</label>
+        <select id="pf-process" name="process">
+          <option value="">Choose one</option>
+          <option value="Stamping only">Stamping only</option>
+          <option value="Stamping + welding">Stamping + welding</option>
+          <option value="Stamping + coating">Stamping + coating</option>
+          <option value="Stamping + assembly">Stamping + assembly</option>
+          <option value="New tool build + production">New tool build + production</option>
+        </select>
+      </div>
+      <div>
+        <label for="pf-material">Material and thickness</label>
+        <input id="pf-material" name="material" type="text" placeholder="e.g. CRCA 0.8mm">
+      </div>
+      <div>
+        <label for="pf-volume">Annual volume</label>
+        <input id="pf-volume" name="volume" type="text" placeholder="e.g. 2,00,000 parts">
+      </div>
+      <button class="btn go" type="submit">Continue to the quote form</button>
+    </form>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="section tint" aria-labelledby="faq-h">
   <div class="section-head">
@@ -377,13 +410,13 @@
 {"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js?v=1792091385';
+  import { initHero3D } from './assets/hero3d.js?v=1792091847';
   try {
     initHero3D({ kind: 'blank', accent: 0x1D5FD1, mount: '#hero3d', modelX: 0, modelScale: 1.28 });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/scrollfx.js?v=1792091385" defer></script>
-<script src="assets/site.js?v=1792091385" defer></script>
+<script src="assets/scrollfx.js?v=1792091847" defer></script>
+<script src="assets/site.js?v=1792091847" defer></script>
 </body>
 </html>

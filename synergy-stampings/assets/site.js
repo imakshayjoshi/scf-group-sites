@@ -136,6 +136,21 @@
   }
 
   // Quote form: POST to RFQ hook (email confirmation + owner copy), mailto fallback
+  // RFQ prefill widget -> quote.html
+  var prefill = document.querySelector('form[data-prefill]');
+  if (prefill) {
+    prefill.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var fd = new FormData(prefill);
+      var q = new URLSearchParams();
+      ['process', 'material', 'volume'].forEach(function (k) {
+        var v = (fd.get(k) || '').toString().trim();
+        if (v) q.set(k, v);
+      });
+      window.location.href = 'quote.html' + (q.toString() ? '?' + q.toString() : '');
+    });
+  }
+
   var form = document.querySelector('form[data-rfq]');
   if (form) {
     var params = new URLSearchParams(window.location.search);
