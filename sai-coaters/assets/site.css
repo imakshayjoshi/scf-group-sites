@@ -445,9 +445,9 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
   padding: clamp(36px, 6vw, 80px);
   overflow: hidden; position: relative;
   box-shadow: var(--shadow-lg);
-  min-height: clamp(560px, 80svh, 800px);
+  min-height: clamp(520px, 74svh, 700px);
 }
-.hero-panel .hero-title { color: #fff; font-size: clamp(2.2rem, 1.1rem + 3.4vw, 3.8rem); }
+.hero-panel .hero-title { color: #fff; font-size: clamp(2.1rem, 1rem + 3vw, 3.4rem); }
 .hero-panel .hero-standfirst, .hero-panel .hero-sub { color: rgba(255,255,255,0.72); }
 .hero-panel .hero-standfirst b, .hero-panel .hero-sub b { color: #fff; }
 .hero-panel .hero-proof span {
@@ -491,3 +491,24 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
   box-shadow: 0 24px 60px rgba(0,0,0,0.35); /* taste-skill-ignore depth over 3D */
 }
 .hero-3d .fallback { opacity: 0.4; }
+
+
+/* ---- logo strip v2: real-size logos on white chips, proper rhythm ---- */
+.proof-bar .note { margin: 0 0 18px; text-align: center; font-style: normal; }
+.logo-strip { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 14px; padding: 4px 0; }
+.logo-strip img { height: 26px; width: auto; max-width: 130px; object-fit: contain; padding: 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; box-sizing: content-box; filter: none; opacity: 1; transition: transform 300ms var(--spring), box-shadow 300ms ease; }
+.logo-strip img:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+/* hero polish v2 */
+.hero-panel .hero-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) { .hero-panel .hero-proof { grid-template-columns: 1fr; } }
+.hero-panel .hero-proof span { white-space: nowrap; }
+
+/* audit fixes */
+.faq-list { max-width: 880px; margin-inline: auto; }
+.hero-panel .hero-proof span { font-size: 13.5px; padding: 8px 14px; }
+.who-card img, .prod-row img { filter: brightness(1.07) contrast(1.04); }
+
+/* audit contrast bumps */
+.fig figcaption { color: rgba(30,38,50,0.75); }
+.hero-dark + .hero .note { color: inherit; opacity: 0.8; }

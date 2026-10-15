@@ -168,13 +168,13 @@ export function initHero3D(cfg) {
     new THREE.PlaneGeometry(7.5, 7.5),
     new THREE.MeshBasicMaterial({ map: makeGlowTexture(cfg.accent), transparent: true, depthWrite: false })
   );
-  glow.position.set(1.7, 0, -2.2);
+  glow.position.set(1.95, 0, -2.2);
   scene.add(glow);
 
   const model = cfg.kind === 'plate' ? buildPlate(cfg.accent) : buildBlank(cfg.accent);
   model.scale.setScalar(cfg.kind === 'plate' ? 1.28 : 1.18);
   const baseY = cfg.kind === 'plate' ? 0.05 : 0.18;
-  model.position.set(cfg.modelX || 1.7, baseY, 0);
+  model.position.set(cfg.modelX || 1.95, baseY, 0);
   scene.add(model);
 
   let tx = 0, ty = 0, rx = 0, ry = 0;
@@ -191,8 +191,8 @@ export function initHero3D(cfg) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // narrow screens: pull model back to center so it stays visible
-    model.position.x = w < 760 ? 0 : 1.7;
-    glow.position.x = w < 760 ? 0 : 1.7;
+    model.position.x = w < 760 ? 0 : 1.95;
+    glow.position.x = w < 760 ? 0 : 1.95;
     camera.updateProjectionMatrix();
   }
   resize();

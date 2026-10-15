@@ -118,43 +118,80 @@
     });
   }
 
-  // Quote form: compose email + WhatsApp, show confirmation with reference
+  // Quote form: POST to RFQ hook (email confirmation + owner copy), mailto fallback
   var form = document.querySelector('form[data-rfq]');
   if (form) {
     var params = new URLSearchParams(window.location.search);
     ['process', 'material', 'volume'].forEach(function (k) {
       var el = form.querySelector('[name="' + k + '"]');
-      if (el && params.get(k)) { el.value = params.get(k); }
+      if (el && params.get(k)) {
+        if (el.tagName === 'SELECT') {
+          var opt = Array.prototype.find.call(el.options, function (o) { return o.value === params.get(k); });
+          if (opt) el.value = opt.value; else { el.value = params.get(k); }
+        } else { el.value = params.get(k); }
+      }
     });
+
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var fd = new FormData(form);
       var get = function (k) { return (fd.get(k) || '').toString().trim(); };
-      var ref = 'SYN-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(100 + Math.random() * 900);
-      var lines = [
-        'RFQ reference: ' + ref, '',
-        'Name: ' + get('name'), 'Company: ' + get('company'),
-        'Phone: ' + get('phone'), 'Email: ' + get('email'), '',
-        'Part name: ' + get('part'), 'Process needed: ' + get('process'),
-        'Material and thickness: ' + get('material'), 'Annual volume: ' + get('volume'),
-        'Target date: ' + get('date'), 'Delivery city: ' + get('city'),
-        'NDA required before drawing review: ' + (fd.get('nda') ? 'Yes' : 'No'), '',
-        'Notes: ' + get('notes'), '',
-        '(Attach your drawing file to this email before sending. STEP, DXF, DWG or PDF.)'
-      ];
-      var subject = 'RFQ ' + ref + ' - ' + (get('part') || 'Component') + ' - ' + (get('company') || 'Buyer');
-      var target = form.getAttribute('data-email') || 'info@synergystampings.com';
       var confirmBox = document.querySelector('.quote-confirm');
-      if (confirmBox) {
+      var msg = confirmBox ? confirmBox.querySelector('.confirm-msg') : null;
+      var btn = form.querySelector('button[type="submit"]');
+      var btnLabel = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+      var payload = {
+        site: get('site') || form.getAttribute('data-site') || '',
+        name: get('name'), company: get('company'), phone: get('phone'), email: get('email'),
+        part: get('part'), process: get('process'), material: get('material'), volume: get('volume'),
+        date: get('date'), city: get('city'), nda: !!fd.get('nda'), notes: get('notes'),
+        website: get('website')
+      };
+
+      function showSuccess(ref, message) {
+        if (!confirmBox) return;
         confirmBox.querySelector('.ref').textContent = ref;
+        if (msg && message) msg.textContent = message;
         var wa = confirmBox.querySelector('.wa-link');
         if (wa) {
-          wa.href = 'https://wa.me/' + (form.getAttribute('data-wa') || '919763710376') + '?text=' + encodeURIComponent('RFQ ' + ref + ': ' + (get('part') || 'Component enquiry') + ' from ' + (get('company') || '') + '. Details emailed.');
+          wa.href = 'https://wa.me/919763710376?text=' + encodeURIComponent('RFQ ' + ref + ': ' + (payload.part || 'Component enquiry') + ' from ' + (payload.company || '') + '.');
         }
         confirmBox.classList.add('show');
         confirmBox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        if (btn) { btn.disabled = false; btn.textContent = btnLabel; }
       }
-      window.location.href = 'mailto:' + target + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+
+      fetch('https://mission.xseven.us/v1/hooks/scf-rfq', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        if (res && res.ok && res.ref) {
+          showSuccess(res.ref, 'Your RFQ is sent. A confirmation email is on its way to ' + payload.email + ' — reply to it with your drawing attached. An engineer reviews drawings within one working day.');
+          form.reset();
+        } else {
+          throw new Error('bad response');
+        }
+      }).catch(function () {
+        // fallback: prewritten email in the visitor's mail app
+        var ref = "SYN-" + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(100 + Math.random() * 900);
+        var lines = [
+          'RFQ reference: ' + ref, '',
+          'Name: ' + payload.name, 'Company: ' + payload.company,
+          'Phone: ' + payload.phone, 'Email: ' + payload.email, '',
+          'Part name: ' + payload.part, 'Process needed: ' + payload.process,
+          'Material and thickness: ' + payload.material, 'Annual volume: ' + payload.volume,
+          'Target date: ' + payload.date, 'Delivery city: ' + payload.city,
+          'NDA required before drawing review: ' + (payload.nda ? 'Yes' : 'No'), '',
+          'Notes: ' + payload.notes, '',
+          '(Attach your drawing file to this email before sending. STEP, DXF, DWG or PDF.)'
+        ];
+        var subject = 'RFQ ' + ref + ' - ' + (payload.part || 'Component') + ' - ' + (payload.company || 'Buyer');
+        showSuccess(ref, 'Our direct line hiccuped, so your email app has opened with everything written instead. Attach your drawing and press send; we still get your RFQ instantly.');
+        window.location.href = 'mailto:info@synergystampings.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      });
     });
   }
 })();

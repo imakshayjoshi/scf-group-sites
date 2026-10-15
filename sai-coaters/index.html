@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1792051260">
+<link rel="stylesheet" href="assets/site.css?v=1792057744">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -142,9 +142,16 @@
 <section class="hero" style="padding-top:0;">
   <div class="proof-bar" style="margin-top: clamp(20px, 4vh, 40px);">
     <p class="note">The OEMs and Tier-1s our group already supplies:</p>
-    <div class="names">
-      <span>Mahindra &amp; Mahindra</span><span>ABB India</span><span>BHEL</span><span>Gabriel India</span><span>Lauritz Knudsen</span><span>KPIT</span><span>Sharda Motors</span><span>Sipra Engineers</span>
-    </div>
+    <div class="logo-strip" aria-label="OEMs and Tier-1 companies the SCF Group supplies">
+        <img src="assets/logos/mahindra.png" alt="Mahindra & Mahindra logo" loading="lazy" height="30">
+        <img src="assets/logos/abb.png" alt="ABB India logo" loading="lazy" height="30">
+        <img src="assets/logos/bhel.png" alt="BHEL logo" loading="lazy" height="30">
+        <img src="assets/logos/gabriel.png" alt="Gabriel India logo" loading="lazy" height="30">
+        <img src="assets/logos/lauritzknudsen.png" alt="Lauritz Knudsen logo" loading="lazy" height="30">
+        <img src="assets/logos/kpit.png" alt="KPIT logo" loading="lazy" height="30">
+        <img src="assets/logos/shardamotors.png" alt="Sharda Motors logo" loading="lazy" height="30">
+        <img src="assets/logos/sipra.png" alt="Sipra Engineers logo" loading="lazy" height="30">
+      </div>
   </div>
 </section>
 
@@ -406,12 +413,12 @@
 {"imports": {"three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/"}}
 </script>
 <script type="module">
-  import { initHero3D } from './assets/hero3d.js?v=1792051260';
+  import { initHero3D } from './assets/hero3d.js?v=1792057744';
   try {
     initHero3D({ kind: 'plate', accent: 0xFF6A00, mount: '#hero3d' });
     document.getElementById('hero3d').classList.add('on');
   } catch (e) { /* fallback photo stays */ }
 </script>
-<script src="assets/site.js?v=1792051260" defer></script>
+<script src="assets/site.js?v=1792057744" defer></script>
 </body>
 </html>

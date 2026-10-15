@@ -155,7 +155,7 @@ export function initHero3D(cfg) {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   if ('environmentIntensity' in scene) scene.environmentIntensity = 1.25;
 
-  const key = new THREE.DirectionalLight(0xffffff, 1.7);
+  const key = new THREE.DirectionalLight(0xffffff, 1.9);
   key.position.set(4, 6, 6);
   scene.add(key);
   const rim = new THREE.DirectionalLight(cfg.accent, 2.6);
@@ -163,18 +163,25 @@ export function initHero3D(cfg) {
   scene.add(rim);
   scene.add(new THREE.AmbientLight(0xffffff, 0.22));
 
-  // accent glow bloom behind the model
+  // light theme: soft blue halo far behind + contact shadow under the model
   const glow = new THREE.Mesh(
-    new THREE.PlaneGeometry(7.5, 7.5),
-    new THREE.MeshBasicMaterial({ map: makeGlowTexture(cfg.accent), transparent: true, depthWrite: false })
+    new THREE.PlaneGeometry(9, 9),
+    new THREE.MeshBasicMaterial({ map: makeGlowTexture(cfg.accent), transparent: true, depthWrite: false, opacity: 0.5 })
   );
-  glow.position.set(1.7, 0, -2.2);
+  glow.position.set(1.95, 0.2, -2.6);
   scene.add(glow);
+  const shadowTex = makeGlowTexture(0x0A1020);
+  const contact = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.6, 4.6),
+    new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0.55 })
+  );
+  contact.position.set(1.95, -1.55, -0.6);
+  scene.add(contact);
 
   const model = cfg.kind === 'plate' ? buildPlate(cfg.accent) : buildBlank(cfg.accent);
   model.scale.setScalar(cfg.kind === 'plate' ? 1.28 : 1.18);
   const baseY = cfg.kind === 'plate' ? 0.05 : 0.18;
-  model.position.set(cfg.modelX || 1.7, baseY, 0);
+  model.position.set(cfg.modelX || 1.95, baseY, 0);
   scene.add(model);
 
   let tx = 0, ty = 0, rx = 0, ry = 0;
@@ -191,8 +198,9 @@ export function initHero3D(cfg) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // narrow screens: pull model back to center so it stays visible
-    model.position.x = w < 760 ? 0 : 1.7;
-    glow.position.x = w < 760 ? 0 : 1.7;
+    model.position.x = w < 760 ? 0 : 1.95;
+    glow.position.x = w < 760 ? 0 : 1.95;
+    contact.position.x = w < 760 ? 0 : 1.95;
     camera.updateProjectionMatrix();
   }
   resize();

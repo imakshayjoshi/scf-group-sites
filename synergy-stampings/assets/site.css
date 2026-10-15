@@ -190,11 +190,7 @@ h1, h2, h3, .display { font-weight: 700; letter-spacing: -0.035em; line-height: 
 
 /* proof: modern cards */
 .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.proof-tile {
-  min-height: 140px; padding: 22px; border-radius: var(--r-lg); background: var(--surface);
-  display: flex; align-items: flex-start; font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.4rem); letter-spacing: -0.02em; line-height: 1.2;
-  transition: transform 260ms var(--spring), box-shadow 260ms ease;
-}
+
 .proof-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .proof-tile.head { grid-column: span 2; background: var(--blue); color: #fff; font-size: clamp(1.4rem, 2.4vw, 2.1rem); }
 .proof-note { margin-top: 26px; font-size: 16px; color: var(--ink-2); max-width: 62ch; }
@@ -384,9 +380,9 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
   padding: clamp(36px, 6vw, 80px);
   overflow: hidden; position: relative;
   box-shadow: var(--shadow-lg);
-  min-height: clamp(560px, 80svh, 800px);
+  min-height: clamp(520px, 74svh, 700px);
 }
-.hero-panel .hero-title { color: #fff; font-size: clamp(2.2rem, 1.1rem + 3.4vw, 3.8rem); }
+.hero-panel .hero-title { color: #fff; font-size: clamp(2.1rem, 1rem + 3vw, 3.4rem); }
 .hero-panel .hero-standfirst, .hero-panel .hero-sub { color: rgba(255,255,255,0.72); }
 .hero-panel .hero-standfirst b, .hero-panel .hero-sub b { color: #fff; }
 .hero-panel .hero-proof span {
@@ -430,3 +426,95 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
   box-shadow: 0 24px 60px rgba(0,0,0,0.35); /* taste-skill-ignore depth over 3D */
 }
 .hero-3d .fallback { opacity: 0.4; }
+
+
+/* ---- logo strip v2: real-size logos on white chips, proper rhythm ---- */
+.proof-bar .note { margin: 0 0 18px; text-align: center; font-style: normal; }
+.logo-strip { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 14px; padding: 4px 0; }
+.logo-strip img { height: 26px; width: auto; max-width: 130px; object-fit: contain; padding: 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; box-sizing: content-box; filter: none; opacity: 1; transition: transform 300ms var(--spring), box-shadow 300ms ease; }
+.logo-strip img:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+/* hero polish v2 */
+.hero-panel .hero-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) { .hero-panel .hero-proof { grid-template-columns: 1fr; } }
+.hero-panel .hero-proof span { white-space: nowrap; }
+
+/* ============ SYNERGY PRECISION THEME (light, blueprint, sharp) ============ */
+:root {
+  --bg: #F5F4F0;
+  --surface: #FFFFFF;
+  --ink: #14181F;
+  --ink-2: #4A5462;
+  --line: #D9DEE7;
+  --blue: #1D5FD1;
+  --blue-ink: #0F3E96;
+  --r-lg: 10px;
+  --r-md: 8px;
+  --shadow-lg: 0 2px 6px rgba(20,24,31,0.06), 0 18px 44px rgba(20,24,31,0.07);
+  --shadow-sm: 0 1px 3px rgba(20,24,31,0.08);
+}
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(29,95,209,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,95,209,0.045) 1px, transparent 1px); /* blueprint grid */
+  background-size: 44px 44px;
+}
+/* header: sharp, hairline, no pill */
+.site-head { border-radius: 12px !important; box-shadow: none !important; border: 1px solid var(--line) !important; }
+.btn { border-radius: 8px !important; }
+/* hero: light blueprint panel, solid white card (no glass) */
+.hero-panel {
+  background: linear-gradient(120deg, #FFFFFF 0%, #EDF2FB 70%, #E3ECFA 100%); /* taste-skill-ignore paper-to-blueprint wash */
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+}
+.hero-panel .hero-title { color: var(--ink); font-size: clamp(2.1rem, 1rem + 3vw, 3.4rem); }
+.hero-panel .hero-standfirst, .hero-panel .hero-sub { color: var(--ink-2); }
+.hero-panel .hero-standfirst b, .hero-panel .hero-sub b { color: var(--ink); }
+.hero-panel .hero-proof span {
+  background: #FFFFFF; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.hero-panel .hero-copy {
+  background: #FFFFFF; /* solid card, blueprint border */
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+}
+.hero-panel .btn.secondary { background: #fff; color: var(--blue-ink); border: 1px solid var(--blue); }
+.hero-panel .btn.secondary:hover { background: #EDF2FB; }
+.hero-3d .fallback { opacity: 1; border-radius: 10px; }
+/* sharp cards, hairlines, no blob shadows */
+.stat-card, .process-card, .who-card, .faq-item, .quote-form, .quote-side, .fig, .spec {
+  border-radius: var(--r-md) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--line) !important;
+}
+.cap-row { border-radius: var(--r-md) !important; }
+/* stats: tabular numerals for the engineering feel */
+.stat-card .n, .proof-bar .names, .spec td { font-variant-numeric: tabular-nums; }
+/* dark CTA panel stays dark for contrast at the end */
+
+/* square chips to match the precision theme */
+.logo-strip img { border-radius: 8px; }
+
+/* proof tiles with real logos */
+.proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.proof-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px 14px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-md); text-align: center; }
+.proof-tile img { height: 30px; width: auto; max-width: 120px; object-fit: contain; }
+.proof-tile span { font-size: 13px; color: var(--ink-2, #4A5462); }
+@media (max-width: 800px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
+/* FAQ answer contrast on light theme */
+.faq-item p, .faq-item .a { color: #333B48 !important; }
+
+.faq-list { max-width: 880px; margin-inline: auto; }
+
+/* audit contrast bumps */
+.fig figcaption { color: rgba(30,38,50,0.75); }
+.hero-dark + .hero .note { color: inherit; opacity: 0.8; }
