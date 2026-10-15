@@ -1401,3 +1401,20 @@ html { scroll-padding-top: 96px; }
   h1, h2, h3, p, li, tr { break-inside: avoid; }
   .spec, .prod-row, .who-card, .process-card { border: 1px solid #ccc !important; break-inside: avoid; }
 }
+
+/* 320px floor: footer emails wrap; header pill never overflows */
+.foot-grid a { overflow-wrap: anywhere; word-break: break-word; }
+@media (max-width: 380px) {
+  .site-head .wordmark { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .site-head .menu-toggle { flex: none; }
+  .site-head .head-inner { gap: 8px; }
+}
+
+/* 320-380px floor */
+@media (max-width: 380px) {
+  .site-head .wordmark .wm-text { display: none; } /* brand mark carries the header at tiny widths */
+  .site-head .wordmark .mark { width: 28px; height: 28px; }
+  .site-head { gap: 8px; }
+  .foot-grid { grid-template-columns: 1fr !important; }
+  .hero-cine-light .kicker, .kicker { white-space: normal; letter-spacing: 0.14em; }
+}
