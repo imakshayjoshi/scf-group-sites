@@ -216,7 +216,7 @@ export function initHero3D(cfg) {
     const t = clock.getElapsedTime();
     rx += (tx - rx) * 0.045;
     ry += (ty - ry) * 0.045;
-    model.rotation.y = t * (reduce ? 0 : 0.22) + rx * 2.2;
+    model.rotation.y =  t * (reduce ? 0 : 0.22) + rx * 2.2 + (window.__heroScroll || 0) * Math.PI * 0.9;
     const baseX = cfg.kind === 'plate' ? -0.32 : -0.12;
     model.rotation.x += ((baseX + ry * 1.4) - model.rotation.x) * 0.05;
     model.position.y = baseY + Math.sin(t * 0.8) * (reduce ? 0 : 0.07);

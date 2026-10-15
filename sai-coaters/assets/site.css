@@ -1154,3 +1154,41 @@ figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); 
 body:has(.hero-cine) .site-head { position: fixed; top: 14px; left: var(--margin, 24px); right: var(--margin, 24px); margin: 0; }
 body:has(.hero-cine) { padding-top: 0 !important; }
 .hero-cine .kicker { top: clamp(100px, 14vh, 140px); }
+
+/* ============ SCROLLYTELLING ============ */
+/* hero scroll-out */
+.hero-cine .hero-copy { transform: translateY(calc(var(--out, 0) * -56px)); opacity: calc(1 - var(--out, 0) * 1.25); }
+.hero-cine .kicker { opacity: calc(1 - var(--out, 0) * 2); }
+.hero-cine .hero-3d { transform: scale(calc(1 + var(--out, 0) * 0.06)); }
+.hero-cine .scroll-cue { opacity: calc(1 - var(--out, 0) * 3); }
+/* pinned chapter scene */
+.scene { height: 320vh; position: relative; }
+.scene-stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+.scene-dark { background: #060D16; color: #fff; }
+.scene-words { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2em 0.35em; padding: 0 5vw; text-align: center; }
+.scene-words .w { font-size: clamp(2.6rem, 3vw + 2.6rem, 6rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.04;
+  opacity: calc(0.1 + var(--wp, 0) * 0.9); transform: translateY(calc((1 - var(--wp, 0)) * 26px)) scale(calc(0.96 + var(--wp, 0) * 0.04));
+  transition: opacity 0.1s linear, transform 0.1s linear; will-change: opacity, transform; }
+.scene-words .w.accent { color: var(--orange, #FF6A00); }
+.scene-sub { margin-top: 5vh; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.3rem); color: rgba(255,255,255,0.62); letter-spacing: 0.02em;
+  opacity: var(--sp, 0); transform: translateY(calc((1 - var(--sp, 0)) * 18px)); }
+.scene-progress { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); width: 120px; height: 2px; background: rgba(255,255,255,0.14); border-radius: 2px; overflow: hidden; }
+.scene-progress i { display: block; height: 100%; width: calc(var(--p, 0) * 100%); background: var(--orange, #FF6A00); }
+@media (max-width: 760px) {
+  .scene { height: auto; }
+  .scene-stage { position: static; height: auto; padding: 96px 24px; }
+  .scene-words .w { opacity: 1; transform: none; }
+  .scene-sub { opacity: 1; transform: none; }
+  .scene-progress { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene { height: auto; } .scene-stage { position: static; height: auto; padding: 96px 24px; }
+  .scene-words .w, .scene-sub { opacity: 1 !important; transform: none !important; }
+  .scene-progress { display: none; }
+  .hero-cine .hero-copy, .hero-cine .hero-3d, .hero-cine .kicker, .hero-cine .scroll-cue { transform: none !important; opacity: 1 !important; }
+}
+
+/* unlit word floor + accent transitions gray->orange */
+.scene-words .w { opacity: calc(0.16 + var(--wp, 0) * 0.84); }
+.scene-words .w.accent { color: color-mix(in srgb, #FFFFFF calc((1 - var(--wp, 0)) * 100%), #FF6A00 calc(var(--wp, 0) * 100%)); }
+.scene-progress { width: 160px; height: 3px; }
