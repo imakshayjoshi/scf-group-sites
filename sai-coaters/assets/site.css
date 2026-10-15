@@ -1283,3 +1283,17 @@ img.cutout { object-fit: contain !important; padding: 5%; background: transparen
 .spec-current-note { font-size: 15px; color: var(--muted, #5c6470); max-width: 320px; }
 .spec-current h3 { margin-bottom: 6px; }
 .chapter .lead { margin-top: clamp(24px, 4vh, 44px) !important; }
+
+/* fluid rhythm pass: single gap between sections, never doubled */
+.chapter { padding: clamp(48px, 9vh, 96px) var(--margin); }
+.section, .chapter { padding-top: clamp(48px, 9vh, 96px); padding-bottom: clamp(48px, 9vh, 96px); }
+.section + .section, .chapter + .chapter, .section + .chapter, .chapter + .section { }
+/* fixed-height leftovers become fluid */
+.hero-panel { min-height: clamp(480px, 70svh, 640px); }
+
+/* fluid tables: never wider than the viewport */
+table { width: 100%; max-width: 100%; table-layout: auto; }
+th, td { overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  th, td { padding: 10px 12px; font-size: 14px; }
+}
